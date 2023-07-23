@@ -9,10 +9,24 @@ const initialState = {
     uid: ''
 } as initialState;
 
+console.log(initialState)
+
 export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
+        initialCheck: (state, action: PayloadAction<object>) => {
+            const newPayload = action.payload as authPayload;
+
+            if (newPayload.username && newPayload.uid) {
+                return({
+                    isAuth: true,
+                    username: newPayload.username,
+                    uid: newPayload.uid,
+                })}
+
+            return(initialState)
+        },
         logOut: () => {
             return initialState;
         },
@@ -28,5 +42,5 @@ export const authSlice = createSlice({
     }
 })
 
-export const {logIn, logOut} = authSlice.actions
+export const {initialCheck, logIn, logOut} = authSlice.actions
 export default authSlice.reducer

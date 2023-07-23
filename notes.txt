@@ -1,0 +1,19 @@
+Notes - Backend
+- first time building it, understanding routes. have previous experience working in change management performing updates
+- use of Postman to test the API routes adn requests as well as error handling
+- GET, POST, DELETE requests
+- Managing app-wide state using Redux-Toolkit
+- Using localStorage to persist state across reloads
+ 
+Notes - Problems
+- LocalStorage is not defined (on-recoverable-error)
+
+Cristina Explanation
+> client < server < backend
+> server <information> backend
+> server <information + website(html, css, js)> client
+> client takes over
+> bananas = 1
+> bananas = 0
+> browser
+

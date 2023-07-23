@@ -3,8 +3,10 @@
 import { useEffect, useState } from "react";
 import styles from "./Header.module.css";
 import ProfilePanel from "./ProfilePanel";
+import { useDispatch } from "react-redux";
 
 const Header = () => {
+
     const [loggedIn, setLoggedIn] = useState(false)
     const [open, setOpen] = useState(false)
 
