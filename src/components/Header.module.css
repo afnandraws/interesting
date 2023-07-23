@@ -1,0 +1,45 @@
+.header {
+    box-sizing: border-box;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+}
+
+.navlinks {
+    font-size: 16px;
+    color: rgb(254, 255, 255);
+}
+
+.navlinks li {
+    
+}
+
+.navlinks li a {
+    transition: all 0.3s ease 0s;
+}
+
+.navlinks li a:hover {
+    color: aqua;
+}
+
+.cta {
+    font-size: 16px;
+    padding: 9px 15px;
+    border: 1px solid rgb(34, 34, 34);
+    background-color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+}
+
+.cta a {
+    text-decoration: none;
+    transition: all 0.3s ease 0s;
+
+}
+
+.cta a:hover {
+    color: aqua;
+}
