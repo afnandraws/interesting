@@ -1,7 +1,8 @@
+import styles from "./LogOutPanel.module.css";
 
 const LogOutPanel = () => {
 
-    const logoutHandler = () => {
+    const logoutHandler = (props) => {
         localStorage.removeItem('id')
         localStorage.removeItem('username')
         location.reload();

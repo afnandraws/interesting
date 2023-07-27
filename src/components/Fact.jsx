@@ -12,13 +12,56 @@ const Fact = () => {
 	const [save, setSave] = useState(false);
 
 	const username = useAppSelector((state) => state.authReducer.username)
+	const uid = useAppSelector((state) => state.authReducer.uid)
+	//this is to display the username on the main text
 
 	function saveHandler(e) {
 		e.preventDefault();
-		setSave((prevState) => {
-			return !prevState;
-		});
-		console.log(save);
+		
+		console.log(save)
+		switch (save) {
+			case true:
+				setSave(false)
+				
+				const postUnsavedFacts = async () => {
+					const response = await fetch('http://localhost:3001/users/unsavepost',{
+						method: 'POST',
+						headers: {
+						  'Accept': 'application/json',
+						  'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({id: uid, postID: facts[counter].id})
+					  })
+					.then(res => {if (res.ok) {return res.json()}})
+					.catch(err => {console.log(err); setSave(false)})
+				}
+
+				postUnsavedFacts()
+
+				break;
+			
+			case false:
+				setSave(true)
+				const postSavedFacts = async () => {
+					const response = await fetch('http://localhost:3001/users/savepost',{
+						method: 'POST',
+						headers: {
+						  'Accept': 'application/json',
+						  'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({id: uid, postID: facts[counter].id})
+					  })
+					.then(res => {if (res.ok) {return res.json()}})
+					.catch(err => {console.log(err); setSave(true)})
+				}
+
+				postSavedFacts()
+
+				break;
+			default:
+				break;
+		}
+		
 	}
 
 	function navigationHandler(event) {
@@ -50,10 +93,10 @@ const Fact = () => {
 					return res.json()
 				}
 			}).then(data => {
-				console.log(data)
 				for (const key in data) {
-			
+					console.log(data)
 					loadedFacts.push({
+						id: data[key]._id,
 						fact: data[key].fact,
 						createdBy: data[key].createdBy === undefined ? "anonymous" : data[key].createdBy,
 					})
@@ -72,7 +115,6 @@ const Fact = () => {
 	useEffect(() => {
 		console.log(facts)
 	}, [facts])
-	
 
 	return (
 		<div className={styles.container}>

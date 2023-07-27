@@ -1,9 +1,11 @@
-import Header2 from "@/components/Header2";
+import Header from "@/components/Header";
+import SavedPosts from "@/components/SavedFacts";
 
 export default function Saved() {
 	return (
 		<div>
-			<Header2 />
+			<Header />
+			<SavedPosts />
 		</div>
 	);
 }

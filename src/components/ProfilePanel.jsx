@@ -97,6 +97,7 @@ const ProfilePanel = (props) => {
                   setLoading(false) //this handles any errors outside of empty fields
                 }
               }).then(data => {
+                console.log(data)
                 if (data === null || data === undefined) {
                   setError(true)
                   setLoading(false)
@@ -104,7 +105,8 @@ const ProfilePanel = (props) => {
                 }
                 localStorage.setItem('id', data._id)
                 localStorage.setItem('username', data.username)
-                dispatch(logIn({username: localStorage.getItem('username'), uid: localStorage.getItem('id')}))
+                localStorage.setItem('savedPosts', data.savedPosts)
+                dispatch(logIn({username: localStorage.getItem('username'), uid: localStorage.getItem('id'), savedPosts: localStorage.getItem('savedPosts')}))
                 props.openHandler()
                 setLoading(false)
 

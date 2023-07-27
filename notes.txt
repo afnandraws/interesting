@@ -7,6 +7,20 @@ Notes - Backend
  
 Notes - Problems
 - LocalStorage is not defined (on-recoverable-error)
+- Save/Unsave function works however on reload, save/unsave is reset and that means someone could technically save the same post multiple times
+- I would make it better by using Neo4J/GraphQL. This is because they allow you to define the relationship between data as well as the data itself
+- Never got to implement the 'verified functionality.'
+
+
+
+
+
+
+
+
+
+
+
 
 Cristina Explanation
 > client < server < backend

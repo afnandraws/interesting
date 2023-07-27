@@ -13,7 +13,7 @@ router.route("/").post((req, res) => {
 	if (req.body.username === "" || req.body.password === "") {
 		console.log("input error");
 
-		res.status(404).json("Mandatory field: name is missing. ");
+		res.status(404).json("Mandatory field: username or password missing. ");
 	} else {
 		User.findOne({
 			username: req.body.username,
@@ -36,7 +36,7 @@ router.route("/add").post((req, res) => {
 	const savedPosts = [];
 	const newUser = new User({ username, password, savedPosts });
 
-	if (req.body.username === "" || req.body.password === "") {
+	if (username === "" || password === "") {
 		console.log("input error");
 		res.status(404).json("Mandatory field missing.");
 	} else {
@@ -58,6 +58,26 @@ router.route("/deleteuser/:id").delete((req, res) => {
 		password: password,
 	})
 		.then(() => res.json("User deleted"))
+		.catch((err) => res.status(400).json("Error: " + err));
+});
+
+//adding a post to someone's favourite list
+router.route("/savepost").post((req, res) => {
+	User.updateOne(
+		{ _id: req.body.id },
+		{ $push: { savedPosts: req.body.postID } }
+	)
+		.then(() => res.json("Fact has been saved"))
+		.catch((err) => res.status(400).json("Error: " + err));
+});
+
+//remove a post from someone's favourite list
+router.route("/unsavepost").post((req, res) => {
+	User.updateOne(
+		{ _id: req.body.id },
+		{ $pull: { savedPosts: req.body.postID } }
+	)
+		.then(() => res.json("Fact has been unsaved"))
 		.catch((err) => res.status(400).json("Error: " + err));
 });
 

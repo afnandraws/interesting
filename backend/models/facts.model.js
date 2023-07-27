@@ -14,7 +14,7 @@ const factSchema = new Schema(
 			trim: true,
 			minlength: 7,
 		},
-		verified: { type: Boolean, required: true },
+		verified: { type: Boolean },
 	},
 	{
 		timestamps: true,
