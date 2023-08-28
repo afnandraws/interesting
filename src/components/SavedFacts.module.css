@@ -1,0 +1,23 @@
+.container {
+  font-family: "rift-soft", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+
+  width: 800px;
+  position: static;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.container h1 {
+    font-family: "rift-soft", sans-serif;
+    font-weight: 600;
+
+    
+    margin: 30px;
+    margin-top: 10px;
+    line-height: 1.1;
+    color: #FA3701;
+  }
+  

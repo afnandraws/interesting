@@ -1,26 +1,13 @@
-label, p {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
 }
 
-p {
-  font-size: small;
+* {
+  background-color: #FCF6EA;
 }
 
-label {
-  display: block;
-  padding-left: 15px;
-  padding-bottom: 5px;
-  margin: auto;
-  box-sizing: border-box;
-}
-
-
-input[type=text], input[type=password] {
-  display: block;
-  margin: auto;
-  margin-bottom: 30px;
-  width:90%;
-  padding: 12px;
-  box-sizing: border-box;
-  border-radius: 4px;
-}

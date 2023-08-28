@@ -1,21 +1,25 @@
 "use client";
 
+import styles from "./SavedFacts.module.css";
+
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "../../redux/store";
 import { useEffect, useState } from "react";
+import Fact from "./Fact";
 
-const loadedFacts = []
+let loadedFacts = []
 
 const SavedPosts = () => {
 	const [facts, setFacts] = useState([]);
 	const username = useAppSelector((state) => state.authReducer.username);
 	const savedPosts = useAppSelector((state) => state.authReducer.savedPosts);
+
 	const { push } = useRouter();
 
 	useEffect(() => {
 		if (!username) {
 			push("/");
-		} else {
+		} else { 
 			const getSavedPosts = async (savedPosts) => {
 				const response = await fetch("http://localhost:3001/facts/favourites", {
 					method: "POST",
@@ -29,19 +33,28 @@ const SavedPosts = () => {
 						return res.json()
 					}
 				}).then(data => {
-					data.forEach(fact => {setFacts(...facts, fact)})
-					
-				});
+					console.log(data)
+					for (const key in data) {
+					loadedFacts.push({
+						id: data[key]._id,
+						fact: data[key].fact,
+						createdBy: data[key].createdBy === undefined ? "anonymous" : data[key].createdBy,
+					})
+					setFacts(loadedFacts)	
+				}					
+				}
+				);
 			}
-
 			getSavedPosts(savedPosts).catch(error => {console.log(error.message)})
 		}
 	}), [];	
 
+	const factsMapped = facts.map(fact => <Fact key={fact.id} fact={fact.fact} createdBy={fact.createdBy} username={username}/> )
+
 	return (
-		<div>
-			<h2>Saved Posts</h2>
-			<ul></ul>
+		<div className={styles.container}>
+			<h1>Hi {username}! Here are <br />your saved Facts:</h1>
+			<div>{factsMapped}</div>
 		</div>
 	);
 };

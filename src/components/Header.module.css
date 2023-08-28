@@ -1,45 +1,113 @@
 .header {
-    box-sizing: border-box;
-}
-
-.header {
     display: flex;
     align-items: center;
+    width: 100%;
 }
 
-.navlinks {
-    font-size: 16px;
-    color: rgb(254, 255, 255);
+.header > button {
+    margin: 20px;
+    height: 140px;
+    width: 120px;
+  
+    background-color: #FCF6EA;
+    border: 4px #FA3701 solid;
+    border-radius: 15px;
+    box-shadow: 8px -8px 0px #FA3701;
+}
+  
+.header > button:focus {
+    outline: none;
+    animation: diagonal-motion 0.1s steps(10);
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
 }
 
-.navlinks li {
-    
+.header > button:not(focus) {
+    animation: diagonal-motion-blur 0.1s steps(10);
+    outline: none;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
 }
 
-.navlinks li a {
-    transition: all 0.3s ease 0s;
+.buttongroup {
+    margin-bottom: 8px;
+    display: flex;
+    flex-direction: column;
 }
 
-.navlinks li a:hover {
-    color: aqua;
+.buttongroup input {
+
+  height: 50px;
+  width: max-content;
+  padding-left: 15px;
+  padding-right: 15px;
+
+  color: #FA3701;
+  font-family: "rift-soft", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  font-size: x-large;
+  text-align: left;
+
+
+  background-color: #FCF6EA;
+  border: 4px #FA3701 solid;
+  border-radius: 15px;
 }
 
-.cta {
-    font-size: 16px;
-    padding: 9px 15px;
-    border: 1px solid rgb(34, 34, 34);
-    background-color: white;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease 0s;
+.buttongroup button {
+    margin: 8px 0px 4px 0px;
+    height: 60px;
+    width: max-content;
+    padding-left: 15px;
+    padding-right: 15px;
+
+    color: #FA3701;
+    font-family: "rift-soft", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: x-large;
+    text-align: left;
+
+    background-color: #FCF6EA;
+    border: 4px #FA3701 solid;
+    border-radius: 15px;
 }
 
-.cta a {
-    text-decoration: none;
-    transition: all 0.3s ease 0s;
-
+.buttongroup button a {
+  text-decoration: none;
+  color: inherit;
 }
 
-.cta a:hover {
-    color: aqua;
+.buttongroup:first :hover {
+  background-color: #FA3701;
+  color: #FCF6EA;
 }
+
+.buttongroup :nth-child(1) {
+    margin-top: 0px;
+}
+  
+@keyframes diagonal-motion {
+    0% {
+      transform: translate(0, 0);
+  
+    }
+    100% {
+      transform: translate(8px, -8px);  
+      box-shadow: 0px 0px 0px #FA3701;
+  
+    }
+  }
+  
+@keyframes diagonal-motion-blur {
+    100% {
+      transform: translate(0, 0);
+  
+    }
+    0% {
+      transform: translate(8px, -8px);  
+      box-shadow: 0px 0px 0px #FA3701;
+  
+    }
+  }

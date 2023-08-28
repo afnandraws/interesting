@@ -54,7 +54,6 @@ router.route("/update/:id").post((req, res) => {
 //get someone's favourite posts
 router.route("/favourites").post((req, res) => {
 	const favourites = req.body.facts;
-
 	Fact.find({ _id: { $in: favourites } }) //this gets all the documents within that array which is sent
 		.then((facts) => res.json(facts))
 		.catch((err) => res.status(400).json("Error: " + err));

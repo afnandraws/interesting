@@ -1,3 +1,11 @@
+.container h1 {
+  font-weight: 600;
+  margin: 30px;
+  margin-top: 10px;
+  line-height: 1.1;
+  color: #FA3701;
+}
+
 .bottombar {
   display: flex;
   width: max-content;
@@ -71,10 +79,44 @@
   animation-fill-mode: forwards;
 }
 
-.bottombar button:active {
-  background-color: #FA3701;
-  
+.bottombar input {
+  margin: 0;
+  padding: 0;
+  height: 31px;
+  appearance: none;
+  border: none;
+  outline: none;
+  background: none;
+
+  font-family: "rift-soft", sans-serif;
+  font-weight: 600;
+  font-size: xx-large;
+
+  color: #FA3701;
+  width: 800px;
+  overflow-x: scroll;
 }
+
+.bottombar input::placeholder {
+  color: #fa3701af;
+}
+
+.cta {
+  font-family: 'nunito-sans', sans-serif;
+  font-weight: 700;
+  font-size: x-large;
+
+  position: absolute;
+  color: #FA3701;
+
+  font-size: x-large;
+  bottom: -5%;
+}
+
+.cta span {
+  color: rgb(255, 168, 38);
+}
+
 
 @keyframes diagonal-motion {
   0% {

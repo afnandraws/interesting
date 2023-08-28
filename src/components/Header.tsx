@@ -1,66 +1,90 @@
 "use client";
 
 import styles from "./Header.module.css";
+import loggedInProfile from "../../public/loggedInProfile.svg";
+import signInProfile from "../../public/signInProfile.svg";
+
 import ProfilePanel from "./ProfilePanel";
-import LogOutPanel from "./LogOutPanel";
+
 import { initialCheck } from "../../redux/slices/authSlice";
 import { useDispatch } from "react-redux";
 import { useMemo, useState } from "react";
 import { useAppSelector } from "../../redux/store";
+import Image from "next/image";
 
 const Header = () => {
 	const [open, setOpen] = useState(false);
 	const isAuth = useAppSelector((state) => state.authReducer.isAuth);
-
+	const dispatch = useDispatch();
+	const url = window.location.href;
+	console.log(url);
 	//isAuth is part of authSlice, handling the log on state
 
-	const dispatch = useDispatch();
+	const memoizedValue = useMemo(() => {
+		const storedString = localStorage.getItem("savedPosts");
+		const storedArray = storedString
+			?.split(",")
+			.filter((post) => post !== undefined && post !== null && post !== "");
 
-	const memoizedValue = useMemo(
-		() =>
-			dispatch(
-				initialCheck({
-					username: localStorage.getItem("username"),
-					uid: localStorage.getItem("id"),
-					savedPosts: localStorage.getItem("savedPosts"),
-				})
-			),
-		[dispatch]
-	);
+		dispatch(
+			initialCheck({
+				username: localStorage.getItem("username"),
+				uid: localStorage.getItem("id"),
+				savedPosts: storedArray,
+			})
+		);
+	}, [dispatch]);
+
+	console.log(memoizedValue);
 	//this does an initialCheck on load to check if the user has previously logged in
 	//log in state is stored in both localStorage and redux state
 	//this is to persist between browser sessions and reloads.
 
 	//memoizedValue contains an object the authSlice if there was a prior session
-	console.log(memoizedValue);
 
 	const openHandler = () => {
 		setOpen(!open);
 		//this handles the Signin/Logout form visibility
 	};
 
+	const logoutHandler = () => {
+		localStorage.removeItem("id");
+		localStorage.removeItem("username");
+		location.reload();
+	};
+
 	return (
 		<>
 			<header className={styles.header}>
 				<button
-					onClick={() => {
+					style={{ backgroundColor: isAuth ? "#FA3701" : "" }}
+					onClick={(e) => {
+						e.currentTarget.focus();
 						setOpen(!open);
+					}}
+					onBlur={(e) => {
+						e.currentTarget.blur();
 					}}>
-					{isAuth ? "Profile" : "Sign-In"}
+					{isAuth ? (
+						<Image alt="logged in" src={loggedInProfile} height={90} />
+					) : (
+						<Image alt="sign in" src={signInProfile} height={90} />
+					)}
 				</button>
-				{isAuth && (
-					<button>
-						<a href="/saved">Saved</a>
-					</button>
+
+				{open && isAuth && (
+					<div className={styles.buttongroup}>
+						<button>
+							<a href={url.includes("saved") ? "/" : "/saved"}>
+								{url.includes("saved") ? "Home" : "Saved Posts"}
+							</a>
+						</button>
+						<button onClick={logoutHandler}>Log Out</button>
+					</div>
 				)}
-				{isAuth && (
-					<button className={styles.cta}>
-						<a href="/">add a new fact</a>
-					</button>
-				)}
+
+				{open && !isAuth && <ProfilePanel openHandler={openHandler} />}
 			</header>
-			{open && !isAuth && <ProfilePanel openHandler={openHandler} />}
-			{open && isAuth && <LogOutPanel />}
 		</>
 	);
 };

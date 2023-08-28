@@ -21,13 +21,14 @@ export const authSlice = createSlice({
     reducers: {
         initialCheck: (state, action: PayloadAction<object>) => {
             const newPayload = action.payload as authPayload;
-            console.log(newPayload)
+            console.log(newPayload.savedPosts)
+
             if (newPayload.username && newPayload.uid) {
                 return({
                     isAuth: true,
                     username: newPayload.username,
                     uid: newPayload.uid,
-                    savedPosts: state.savedPosts.concat(newPayload.savedPosts)
+                    savedPosts: newPayload.savedPosts,
                 })}
 
             return(undefined)
@@ -44,9 +45,38 @@ export const authSlice = createSlice({
                 uid: newPayload.uid,
                 savedPosts: newPayload.savedPosts
             })  
+        },
+        savePost: (state, action) => {
+            const newPayload = action.payload;
+            const newSavedPosts = [...state.savedPosts, newPayload]
+            const storedSavedPosts = newSavedPosts.toLocaleString()
+            console.log(newPayload)
+
+            localStorage.setItem('savedPosts', storedSavedPosts)
+            return ({
+                isAuth: state.isAuth,
+                username: state.username,
+                uid: state.uid,
+                savedPosts: newSavedPosts,
+            })
+        },
+        unsavePost: (state, action) => {
+            const newPayload = action.payload;
+            const newSavedPosts = state.savedPosts.filter(post => post !== newPayload)
+            const storedSavedPosts = newSavedPosts.toLocaleString()
+            console.log(newPayload)
+
+            localStorage.setItem('savedPosts', storedSavedPosts)
+
+            return ({
+                isAuth: state.isAuth,
+                username: state.username,
+                uid: state.uid,
+                savedPosts: newSavedPosts,
+            })
         }
     }
 })
 
-export const {initialCheck, logIn, logOut} = authSlice.actions
+export const {initialCheck, logIn, logOut, savePost, unsavePost} = authSlice.actions
 export default authSlice.reducer

@@ -12,173 +12,120 @@ const ProfilePanel = (props) => {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     
-    const [option, setOption] = useState(true)
+    const [signInOption, setSignInOption] = useState(true)
+    const [signUpOption, setSignUpOption] = useState(false)
+
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
 
-    const focusHandler = (event) => {
-        console.log(event.target.innerText)
+ 
+    const signupPost = async () => {
+      const response = await fetch('http://localhost:3001/users/add', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({username: username, password: password})
+        })
+        .then(res => {
+          console.log(res)
+          if (res.ok) {
+              return res.json()
+          } else if (res.status === 404) {
+              setError(true)
+              setLoading(false)
+              return
+          } else {
+              setLoading(false) //this handles any errors outside of empty fields
+          }
+          }).then(data => {
+              console.log(data)
+              localStorage.setItem('id', data._id)
+              localStorage.setItem('username', data.username)
+              props.openHandler()
+              setLoading(false)
+              loginPost()
+          }).catch((error) => {
+              console.log(error.message);
+          });
+      }
 
-        if (event.target.innerText === 'Login') {
-          setOption(true)
-          event.target.focus()
-        } else {
-          setOption(false)
-        }
-
-    }
-
-    const signupHandler = (event) => {
-      event.preventDefault()
-      setLoading(true)
-      setError(false)
-
-
-      const signupPost = async () => {
-        const response = await fetch('http://localhost:3001/users/add', {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({username: username, password: password})
-          })
-          .then(res => {
-            console.log(res)
-            if (res.ok) {
-                return res.json()
-            } else if (res.status === 404) {
-                  setError(true)
-                  setLoading(false)
-                  return
-                } else {
-                  setLoading(false) //this handles any errors outside of empty fields
+    const loginPost = async () => {
+      const response = await fetch('http://localhost:3001/users', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({username: username, password: password})
+        })
+        .then(res => {
+          console.log(res)
+          if (res.ok) {
+              return res.json()
+          } else if (res.status === 404) {
+              setError(true)
+              setLoading(false)
+              return
+          } else {
+              setLoading(false) //this handles any errors outside of empty fields
                 }
-              }).then(data => {
-              
-                console.log(data)
-                localStorage.setItem('id', data._id)
-                localStorage.setItem('username', data.username)
-                props.openHandler()
+          }).then(data => {
+            console.log(data)
+            if (data === null || data === undefined) {
+                setError(true)
                 setLoading(false)
+                return
+              }
+              localStorage.setItem('id', data._id)
+              localStorage.setItem('username', data.username)
+              localStorage.setItem('savedPosts', data.savedPosts)
+              dispatch(logIn({username: data.username, uid:data._id, savedPosts: data.savedPosts}))
+              props.openHandler()
+              setLoading(false)
 
-              })
-        }
-
-        signupPost().catch((error) => {
-          console.log(error.message);
-        });
-
+          }).catch((error) => {
+              console.log(error.message);
+          });
     }
 
-    const loginHandler = (event) => {
-      event.preventDefault()
-      setLoading(true)
-      setError(false)
-
-      const loginPost = async () => {
-        const response = await fetch('http://localhost:3001/users', {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({username: username, password: password})
-          })
-          .then(res => {
-            console.log(res)
-            if (res.ok) {
-                return res.json()
-            } else if (res.status === 404) {
-                  setError(true)
-                  setLoading(false)
-                  return
-                } else {
-                  setLoading(false) //this handles any errors outside of empty fields
-                }
-              }).then(data => {
-                console.log(data)
-                if (data === null || data === undefined) {
-                  setError(true)
-                  setLoading(false)
-                  return
-                }
-                localStorage.setItem('id', data._id)
-                localStorage.setItem('username', data.username)
-                localStorage.setItem('savedPosts', data.savedPosts)
-                dispatch(logIn({username: localStorage.getItem('username'), uid: localStorage.getItem('id'), savedPosts: localStorage.getItem('savedPosts')}))
-                props.openHandler()
-                setLoading(false)
-
-              })
-        }
-
-      loginPost().catch((error) => {
-			  console.log(error.message);
-		  });
+    const signInHandler = (event) => {
+      event.preventDefault();
+      if (signInOption) {
+        setLoading(true)
+        setError(false)
+        loginPost()
+      } else {
+        setSignInOption(true)
+        setSignUpOption(undefined)
+      }
     }
 
-    const usernameHandler = (event) => {
-        setUsername(event.target.value)
+    const signUpHandler = (event) => {
+      event.preventDefault();
+      if (signUpOption) {
+        setLoading(true)
+        setError(false)
+        signupPost()
+      } else {
+        setSignUpOption(true)
+        setSignInOption(false)
+      }
     }
-
-    const passwordHandler = (event) => {
-        setPassword(event.target.value)
-    }
-
-    const confirmPasswordHandler = (event) => {
-        setConfirmPassword(event.target.value)
-    } 
     
     return ( 
-        <>
-        <div className={styles.dropdown}>
-            <div className={styles.select}>
-                <button onClick={focusHandler}>Login</button>
-                <span>|</span>
-                <button onClick={focusHandler}>Signup</button>
+        <div className={styles.container}>
+            <div className={styles.firstrow}>
+                <input value={username} onChange={e => {setUsername(e.target.value)}} type="text" placeholder="Enter Username" required />
+                <button onClick={signInHandler} style={{ backgroundColor: signInOption && '#FA3701', color: signInOption && '#FCF6EA' }}>{signInOption ? 'Login' : 'Have an account?'}</button>
+                <button onClick={signUpHandler} style={{ backgroundColor: signUpOption && '#FA3701', color: signUpOption && '#FCF6EA' }}>{signUpOption ? 'Sign-Up' : 'Or need an account?'}</button>
             </div>
-
-            {option &&
-            <form className={styles.inputs}>
-            <div>
-            <label>Username</label>
-            <input value={username} onChange={usernameHandler} type="text" placeholder="Enter Username" required />
+            <div className={styles.secondrow}>
+              <input value={password} onChange={e => {setPassword(e.target.value)}} type="password" placeholder="Enter Password" required />
+              {signUpOption && !signInOption && <input value={confirmPassword} onChange={e => {setConfirmPassword(e.target.value)}} type="password" placeholder="Re-enter Password" required />}
             </div>
-
-            <div>
-            <label>Password</label>
-            <input value={password} onChange={passwordHandler} type="password" placeholder="Enter Password" required />
-            </div>
-            {error ? <p>You have entered incorrect login details</p> : ''}
-
-            <button className={styles.submit} onClick={loginHandler}>{loading ? 'loading' : 'Login'}</button>
-            </form>
-            }
-
-            {!option &&
-               <form className={styles.inputs}>
-               <div>
-               <label>Username</label>
-               <input value={username} onChange={usernameHandler} type="text" placeholder="Enter Username" required />
-               </div>
-   
-               <div>
-               <label>Password</label>
-               <input value={password} onChange={passwordHandler} type="password" placeholder="Enter Password" required />
-               </div>
-
-               <div>
-               <label>Confirm Password</label>
-               <input value={confirmPassword} onChange={confirmPasswordHandler} type="password" placeholder="Re-enter Password" required />
-               </div>
-               {password !== confirmPassword ? <p>You have entered incorrect login details</p> : ''}
-   
-               <button className={styles.submit} onClick={signupHandler}>{loading ? 'loading' : 'Signup'}</button>
-               </form>
-            }
         </div>
-        </>
      );
 } 
 

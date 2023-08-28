@@ -1,7 +1,19 @@
+@import url("https://use.typekit.net/lhp5bgl.css");
+
 .main {
+  position: absolute;
+  top: 500px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
-  min-height: 100dvh;
+  justify-content: center;
+
+  font-family: "rift-soft", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: x-large;
+
 }
