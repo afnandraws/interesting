@@ -1,16 +1,17 @@
 const router = require("express").Router();
-const { default: mongoose } = require("mongoose");
 let Fact = require("../models/facts.model");
 
 //getting random facts for the main page, currently set to 3
 router.route("/").get((req, res) => {
-	Fact.aggregate([{ $sample: { size: 3 } }])
+	Fact.aggregate([{ $sample: { size: 100 } }])
 		.then((facts) => res.json(facts))
 		.catch((err) => res.status(400).json("Error: " + err));
+});
 
-	// Fact.find()
-	// 	.then((facts) => res.json(facts))
-	// 	.catch((err) => res.status(400).json("Error: " + err));
+router.route("/getcount").get((req, res) => {
+	Fact.countDocuments()
+		.then((count) => res.json(count))
+		.catch((err) => res.status(400).json("Error " + err));
 });
 
 // this is for someone to submit a new fact

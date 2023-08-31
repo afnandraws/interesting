@@ -11,14 +11,17 @@ import Arrow from '../../public/previousArrow.svg'
 import { useDispatch } from "react-redux";
 import { savePost, unsavePost } from "../../redux/slices/authSlice";
 
-const loadedFacts = [];
+let loadedFacts = [];
 
 const Facts = () => {
+	
+	const [factCount, setFactCount] = useState(0); //this allows for the user to shuffle through the posts
 	const [facts, setFacts] = useState([{}]); //this holds the variables
 	const [counter, setCounter] = useState(0); //this allows for the user to shuffle through the posts
 	const [showAddNewFact, setShowAddNewFact] = useState(false); //this handles whether or not something is being saved
 	const [save, setSave] = useState(false); //this handles whether or not something is being saved
-	
+	const [loading, setLoading] = useState(false)
+
 	const dispatch = useDispatch();
 
 	const savedPosts = useAppSelector((state) => state.authReducer.savedPosts)
@@ -30,7 +33,6 @@ const Facts = () => {
 	const saveButton = <button onClick={saveHandler}>{<Image alt="save" src={saveIcon} height={60} />}</button>
 	const savedButton = <button style={{backgroundColor: "#FA3701", transform: 'translate(8px, -8px)', animation: 'none', boxShadow: '0px 0px 0px #FA3701'}} onClick={saveHandler}>{<Image alt="save" src={savedIcon} height={60} />}</button>
 
-	console.log(savedPosts)
 	function saveHandler(e) {
 		e.preventDefault();
 		
@@ -88,35 +90,48 @@ const Facts = () => {
 		
 	}
 
-	async function submitNewFact() {
-		const response = await fetch('localhost:3001/facts/add', {
-			method: 'POST',
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json'
-			},
-			body: {
-				fact: '',
-				createdBy: username,
-			}
+	const submitNewFact = async (event) => {
+		if (event.key === 'Enter') {
+			const response = await fetch('http://localhost:3001/facts/add', {
+				method: 'POST',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					fact: event.target.value,
+					createdBy: username,
+				})
+		}).catch((error) => {
+			console.log(error.message);
+		});
 
-		})
-	}
+		const data = await response.json()
+		console.log(data)
+		setShowAddNewFact(false)
+	
+	}}
 
 	function navigationHandler(event) {
 		setShowAddNewFact(false)
 		switch (event.target.id) {
 			case "previous":
 				if (!(counter - 1 < 0)) {
-
 					setCounter(counter - 1);
 				}
 				break;
 			case "next":
 				console.log(counter)
 				if (facts[counter + 1]) {
-					
 					setCounter(counter + 1);
+				} else {
+					console.log('worked')
+					console.log(counter+1)
+					console.log(factCount)
+					if (factCount > counter+1) {
+						setLoading(true)
+						fetchFacts()
+					}
 				}
 	
 				break;
@@ -135,31 +150,38 @@ const Facts = () => {
 		console.log(save)
 	}, [facts, savedPosts ,save, counter])
 	
-	
+	const fetchFacts = async () => {
 
-	useEffect(() => {
-		const fetchFacts = async () => {
-			const response = await fetch('http://localhost:3001/facts')
-			const data = await response.json();
-			for (const key in data) {
+		const response = await fetch('http://localhost:3001/facts').catch((error) => {
+			console.log(error.message);
+		});
+		const data = await response.json();
+		console.log(data)
+		for (const key in data) {
+			if (!(loadedFacts.find(fact => fact.id === data[key]._id))) {
 				loadedFacts.push({
 					id: data[key]._id,
 					fact: data[key].fact,
 					createdBy: data[key].createdBy === undefined ? "anonymous" : data[key].createdBy,
-				})
+					})
 			}
-			setFacts(loadedFacts)
 		}
+		setFacts(loadedFacts)
+		setLoading(false)
+	}
 
-		fetchFacts().catch((error) => {
+	const getCount = async () => {
+		const response = await fetch('http://localhost:3001/facts/getcount').catch((error) => {
 			console.log(error.message);
 		});
-
-	}, []);
-
+		const data = await response.json()
+		setFactCount(data);
+	}
+	 
 	useEffect(() => {
-		console.log(facts)
-	}, [facts])
+		fetchFacts()
+		getCount()
+	}, []);
 
 
 	return (
@@ -170,13 +192,17 @@ const Facts = () => {
 		{username ? (save ? savedButton : saveButton) : '' }
 
 		<div>
-			{!showAddNewFact && <div className={styles.fact}>
+			{(!loading && !showAddNewFact) && <div className={styles.fact}>
 				<span>{facts[counter].fact}</span>
 				<span>{facts[counter].createdBy === username ? 'Me!!' : facts[counter].createdBy}</span>
 				</div>}
+			
+			{loading && <div className={styles.fact}>
+				<span>loading...</span>
+				</div>}
 
 			{showAddNewFact && <div className={styles.fact}>
-				<input placeholder="Type in your new interesting fact to share with the world!"/>
+				<input onKeyDown={submitNewFact} placeholder="Type in your new interesting fact to share with the world!"/>
 				<span>{username}</span>
 				</div>}
 	

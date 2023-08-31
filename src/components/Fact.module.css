@@ -27,6 +27,8 @@
   display: flex;
   font-size: xx-large;
   flex-direction: column;
+  line-height: 1.3;
+
 }
 
 

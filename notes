@@ -1,28 +1,23 @@
 Notes - Backend
+
 - first time building it, understanding routes. have previous experience working in change management performing updates
-- use of Postman to test the API routes adn requests as well as error handling
+- use of Postman to test the API routes and requests as well as error handling
 - GET, POST, DELETE requests
 - Managing app-wide state using Redux-Toolkit
 - Using localStorage to persist state across reloads
- 
+
 Notes - Problems
+
 - LocalStorage is not defined (on-recoverable-error)
-- Save/Unsave function works however on reload, save/unsave is reset and that means someone could technically save the same post multiple times
-- I would make it better by using Neo4J/GraphQL. This is because they allow you to define the relationship between data as well as the data itself
+- Save/Unsave function works however on reload, save/unsave is reset and that means someone could technically save the same post multiple times. needed to ensure that
+
+- I would make it better by using Neo4J/GraphQL. This is because they allow you to define the relationship between data as well as the data itself.
 - Never got to implement the 'verified functionality.'
 
-
-
-
-
-
-
-
-
-
-
+- ensured that users cannot continiously call the database. it will check how many entries are in the db. if you have all the facts, it will not call again. should display some kind of feedback
 
 Cristina Explanation
+
 > client < server < backend
 > server <information> backend
 > server <information + website(html, css, js)> client
@@ -30,4 +25,3 @@ Cristina Explanation
 > bananas = 1
 > bananas = 0
 > browser
-

@@ -4,9 +4,11 @@ import SavedPosts from "@/components/SavedFacts";
 
 export default function Saved() {
 	return (
-		<main className={styles.main}>
-			<Header />
-			<SavedPosts />
-		</main>
+		<div className={styles.container}>
+			<main className={styles.main}>
+				<Header />
+				<SavedPosts />
+			</main>
+		</div>
 	);
 }
