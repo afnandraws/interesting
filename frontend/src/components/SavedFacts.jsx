@@ -17,10 +17,7 @@ const SavedPosts = () => {
 	const { push } = useRouter();
 
 	useEffect(() => {
-		if (!username) {
-			push("/");
-		} else { 
-			const getSavedPosts = async (savedPosts) => {
+				const getSavedPosts = async (savedPosts) => {
 				const response = await fetch("https://interesting-app-backend.onrender.com/facts/favourites", {
 					method: "POST",
 					headers: {
@@ -47,7 +44,7 @@ const SavedPosts = () => {
 			}
 			getSavedPosts(savedPosts).catch(error => {console.log(error.message)})
 		}
-	}), [];	
+	), [];	
 
 	const factsMapped = facts.map(fact => <Fact key={fact.id} fact={fact.fact} createdBy={fact.createdBy} username={username}/> )
 

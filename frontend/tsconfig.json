@@ -35,7 +35,8 @@
     "**/*.tsx",
     "build/types/**/*.ts",
     "src/components/SavedFacts.jsx",
-    "build/types/**/*.ts"
+    "build/types/**/*.ts",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"
