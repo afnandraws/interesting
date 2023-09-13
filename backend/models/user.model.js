@@ -9,13 +9,11 @@ const userSchema = new Schema(
 			required: true,
 			unique: true,
 			trim: true,
-			minlength: 7,
 		},
 		password: {
 			type: String,
 			required: true,
 			trim: true,
-			minlength: 7,
 		},
 		savedPosts: {
 			type: Array,

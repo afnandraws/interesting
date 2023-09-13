@@ -12,7 +12,6 @@ const factSchema = new Schema(
 		createdBy: {
 			type: String,
 			trim: true,
-			minlength: 7,
 		},
 		verified: { type: Boolean },
 	},
