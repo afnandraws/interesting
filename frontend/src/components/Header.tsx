@@ -19,10 +19,9 @@ const Header = () => {
 	const dispatch = useDispatch();
 	if (typeof window !== "undefined") {
 		url = window.location.href;
+		console.log(url);
+		//isAuth is part of authSlice, handling the log on state
 	}
-
-	console.log(url);
-	//isAuth is part of authSlice, handling the log on state
 
 	const memoizedValue = useMemo(() => {
 		const storedString = localStorage.getItem("savedPosts");
