@@ -13,10 +13,14 @@ import { useAppSelector } from "../../redux/store";
 import Image from "next/image";
 
 const Header = () => {
+	let url;
 	const [open, setOpen] = useState(false);
 	const isAuth = useAppSelector((state) => state.authReducer.isAuth);
 	const dispatch = useDispatch();
-	const url = window.location.href;
+	if (typeof window !== "undefined") {
+		url = window.location.href;
+	}
+
 	console.log(url);
 	//isAuth is part of authSlice, handling the log on state
 
