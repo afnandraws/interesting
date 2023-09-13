@@ -41,8 +41,8 @@ const ProfilePanel = (props) => {
           }
           }).then(data => {
               console.log(data)
-              localStorage.setItem('id', data._id)
-              localStorage.setItem('username', data.username)
+              localStorage?.setItem('id', data._id)
+              localStorage?.setItem('username', data.username)
               props.openHandler()
               setLoading(false)
               loginPost()
@@ -78,9 +78,9 @@ const ProfilePanel = (props) => {
                 setLoading(false)
                 return
               }
-              localStorage.setItem('id', data._id)
-              localStorage.setItem('username', data.username)
-              localStorage.setItem('savedPosts', data.savedPosts)
+              localStorage?.setItem('id', data._id)
+              localStorage?.setItem('username', data.username)
+              localStorage?.setItem('savedPosts', data.savedPosts)
               dispatch(logIn({username: data.username, uid:data._id, savedPosts: data.savedPosts}))
               props.openHandler()
               setLoading(false)
