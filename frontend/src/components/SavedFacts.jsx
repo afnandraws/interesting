@@ -21,7 +21,7 @@ const SavedPosts = () => {
 			push("/");
 		} else { 
 			const getSavedPosts = async (savedPosts) => {
-				const response = await fetch("http://localhost:3001/facts/favourites", {
+				const response = await fetch("https://interesting-app-backend.onrender.com/facts/favourites", {
 					method: "POST",
 					headers: {
 						'Accept': "application/json",

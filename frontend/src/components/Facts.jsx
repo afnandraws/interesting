@@ -41,7 +41,7 @@ const Facts = () => {
 			case true:
 				console.log(1)
 				const postUnsavedFacts = async () => {
-					const response = await fetch('http://localhost:3001/users/unsavepost',{
+					const response = await fetch('https://interesting-app-backend.onrender.com/users/unsavepost',{
 						method: 'POST',
 						headers: {
 						  'Accept': 'application/json',
@@ -63,7 +63,7 @@ const Facts = () => {
 			case false:
 				console.log(2)
 				const postSavedFacts = async () => {
-					const response = await fetch('http://localhost:3001/users/savepost',{
+					const response = await fetch('https://interesting-app-backend.onrender.com/users/savepost',{
 						method: 'POST',
 						headers: {
 						  'Accept': 'application/json',
@@ -92,7 +92,7 @@ const Facts = () => {
 
 	const submitNewFact = async (event) => {
 		if (event.key === 'Enter') {
-			const response = await fetch('http://localhost:3001/facts/add', {
+			const response = await fetch('https://interesting-app-backend.onrender.com/facts/add', {
 				method: 'POST',
 				headers: {
 					'Accept': 'application/json',
@@ -152,7 +152,7 @@ const Facts = () => {
 	
 	const fetchFacts = async () => {
 
-		const response = await fetch('http://localhost:3001/facts').catch((error) => {
+		const response = await fetch('https://interesting-app-backend.onrender.com/facts').catch((error) => {
 			console.log(error.message);
 		});
 		const data = await response.json();
@@ -171,7 +171,7 @@ const Facts = () => {
 	}
 
 	const getCount = async () => {
-		const response = await fetch('http://localhost:3001/facts/getcount').catch((error) => {
+		const response = await fetch('https://interesting-app-backend.onrender.comfacts/getcount').catch((error) => {
 			console.log(error.message);
 		});
 		const data = await response.json()

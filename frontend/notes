@@ -15,13 +15,3 @@ Notes - Problems
 - Never got to implement the 'verified functionality.'
 
 - ensured that users cannot continiously call the database. it will check how many entries are in the db. if you have all the facts, it will not call again. should display some kind of feedback
-
-Cristina Explanation
-
-> client < server < backend
-> server <information> backend
-> server <information + website(html, css, js)> client
-> client takes over
-> bananas = 1
-> bananas = 0
-> browser

@@ -20,7 +20,7 @@ const ProfilePanel = (props) => {
 
  
     const signupPost = async () => {
-      const response = await fetch('http://localhost:3001/users/add', {
+      const response = await fetch('https://interesting-app-backend.onrender.com/users/add', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -52,7 +52,7 @@ const ProfilePanel = (props) => {
       }
 
     const loginPost = async () => {
-      const response = await fetch('http://localhost:3001/users', {
+      const response = await fetch('https://interesting-app-backend.onrender.com/users', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
