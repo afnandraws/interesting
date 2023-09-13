@@ -8,7 +8,7 @@ import ProfilePanel from "./ProfilePanel";
 
 import { initialCheck } from "../../redux/slices/authSlice";
 import { useDispatch } from "react-redux";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAppSelector } from "../../redux/store";
 import Image from "next/image";
 
@@ -23,7 +23,7 @@ const Header = () => {
 		//isAuth is part of authSlice, handling the log on state
 	}
 
-	const memoizedValue = useMemo(() => {
+	useEffect(() => {
 		const storedString = localStorage?.getItem("savedPosts");
 		const storedArray = storedString
 			?.split(",")
@@ -36,9 +36,8 @@ const Header = () => {
 				savedPosts: storedArray,
 			})
 		);
-	}, [dispatch]);
+	}, []);
 
-	console.log(memoizedValue);
 	//this does an initialCheck on load to check if the user has previously logged in
 	//log in state is stored in both localStorage and redux state
 	//this is to persist between browser sessions and reloads.
