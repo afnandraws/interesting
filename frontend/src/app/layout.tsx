@@ -1,5 +1,3 @@
-"use client";
-
 import type { Metadata } from "next";
 import { AppProvider } from "../../redux/provider";
 
