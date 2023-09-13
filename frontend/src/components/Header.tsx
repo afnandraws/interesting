@@ -24,15 +24,15 @@ const Header = () => {
 	}
 
 	const memoizedValue = useMemo(() => {
-		const storedString = localStorage.getItem("savedPosts");
+		const storedString = localStorage?.getItem("savedPosts");
 		const storedArray = storedString
 			?.split(",")
 			.filter((post) => post !== undefined && post !== null && post !== "");
 
 		dispatch(
 			initialCheck({
-				username: localStorage.getItem("username"),
-				uid: localStorage.getItem("id"),
+				username: localStorage?.getItem("username"),
+				uid: localStorage?.getItem("id"),
 				savedPosts: storedArray,
 			})
 		);
@@ -51,8 +51,8 @@ const Header = () => {
 	};
 
 	const logoutHandler = () => {
-		localStorage.removeItem("id");
-		localStorage.removeItem("username");
+		localStorage?.removeItem("id");
+		localStorage?.removeItem("username");
 		location.reload();
 	};
 
