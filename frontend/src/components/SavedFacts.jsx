@@ -2,7 +2,6 @@
 
 import styles from "./SavedFacts.module.css";
 
-import { useRouter } from "next/navigation";
 import { useAppSelector } from "../../redux/store";
 import { useEffect, useState } from "react";
 import Fact from "./Fact";
@@ -13,12 +12,6 @@ const SavedPosts = () => {
 	const [facts, setFacts] = useState([]);
 	const username = useAppSelector((state) => state.authReducer.username);
 	const savedPosts = useAppSelector((state) => state.authReducer.savedPosts);
-
-	const { push } = useRouter();
-
-	if (!username) {
-		push('/')
-	}
 
 	useEffect(() => {
 				const getSavedPosts = async (savedPosts) => {
