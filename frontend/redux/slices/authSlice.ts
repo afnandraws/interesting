@@ -52,7 +52,7 @@ export const authSlice = createSlice({
             const storedSavedPosts = newSavedPosts.toLocaleString()
             console.log(newPayload)
 
-            localStorage.setItem('savedPosts', storedSavedPosts)
+            localStorage?.setItem('savedPosts', storedSavedPosts)
             return ({
                 isAuth: state.isAuth,
                 username: state.username,
@@ -66,7 +66,7 @@ export const authSlice = createSlice({
             const storedSavedPosts = newSavedPosts.toLocaleString()
             console.log(newPayload)
 
-            localStorage.setItem('savedPosts', storedSavedPosts)
+            localStorage?.setItem('savedPosts', storedSavedPosts)
 
             return ({
                 isAuth: state.isAuth,
