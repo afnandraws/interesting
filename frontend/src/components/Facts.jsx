@@ -172,7 +172,7 @@ const Facts = () => {
 	}
 
 	const getCount = async () => {
-		const response = await fetch('https://interesting-app-backend.onrender.comfacts/getcount').catch((error) => {
+		const response = await fetch('https://interesting-app-backend.onrender.com/facts/getcount').catch((error) => {
 			console.log(error.message);
 		});
 		const data = await response.json()
