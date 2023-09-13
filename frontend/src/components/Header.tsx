@@ -79,8 +79,8 @@ const Header = () => {
 				{open && isAuth && (
 					<div className={styles.buttongroup}>
 						<button>
-							<a href={url.includes("saved") ? "/" : "/saved"}>
-								{url.includes("saved") ? "Home" : "Saved Posts"}
+							<a href={url?.includes("saved") ? "/" : "/saved"}>
+								{url?.includes("saved") ? "Home" : "Saved Posts"}
 							</a>
 						</button>
 						<button onClick={logoutHandler}>Log Out</button>
