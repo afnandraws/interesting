@@ -16,6 +16,10 @@ const SavedPosts = () => {
 
 	const { push } = useRouter();
 
+	if (!username) {
+		push('/')
+	}
+
 	useEffect(() => {
 				const getSavedPosts = async (savedPosts) => {
 				const response = await fetch("https://interesting-app-backend.onrender.com/facts/favourites", {
