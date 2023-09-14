@@ -199,7 +199,7 @@ const Facts = () => {
 				</div>}
 			
 			{loading && <div className={styles.loading}>
-				<span>loading...</span>
+				<span>loading...First time using this app will take longer than usual</span>
 				</div>}
 
 			{showAddNewFact && <div className={styles.fact}>

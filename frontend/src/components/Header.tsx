@@ -11,8 +11,10 @@ import { useDispatch } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
 import { useAppSelector } from "../../redux/store";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
+	const router = useRouter();
 	let url;
 	const [open, setOpen] = useState(false);
 	const isAuth = useAppSelector((state) => state.authReducer.isAuth);
@@ -52,6 +54,7 @@ const Header = () => {
 	const logoutHandler = () => {
 		localStorage?.removeItem("id");
 		localStorage?.removeItem("username");
+		router.push("/");
 		location.reload();
 	};
 
