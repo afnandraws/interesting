@@ -152,7 +152,7 @@ const Facts = () => {
 	}, [facts, savedPosts ,save, counter])
 	
 	const fetchFacts = async () => {
-
+		setLoading(true)
 		const response = await fetch('https://interesting-app-backend.onrender.com/facts').catch((error) => {
 			console.log(error.message);
 		});
@@ -198,7 +198,7 @@ const Facts = () => {
 				<span>{facts[counter].createdBy === username ? 'Me!!' : facts[counter].createdBy}</span>
 				</div>}
 			
-			{loading && <div className={styles.fact}>
+			{loading && <div className={styles.loading}>
 				<span>loading...</span>
 				</div>}
 
