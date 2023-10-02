@@ -1,3 +1,7 @@
+.container {
+  max-width: calc(100dvw - 1rem);
+}
+
 .container h1 {
   font-weight: 600;
   margin: 30px;
@@ -9,6 +13,7 @@
 .bottombar {
   display: flex;
   width: max-content;
+  max-width: calc(100dvw - 1rem);
 }
 
 .bottombar > div {
@@ -166,3 +171,4 @@
     opacity: 0%;
   }
 }
+

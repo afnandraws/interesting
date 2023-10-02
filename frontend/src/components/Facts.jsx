@@ -209,9 +209,10 @@ const Facts = () => {
 	
 			{isAuth && <div className={styles.cta}>Would you like to submit a new interesting fact? <span onClick={() => {setShowAddNewFact(!showAddNewFact)}}>Click here!</span></div>}
 		</div>
-
+		<data>
 		<button onClick={navigationHandler} id="previous"><Image alt="previous" src={Arrow} height={90}/></button>
 		<button onClick={navigationHandler} id="next"><Image style={{transform: 'rotate(180deg)'}} alt="next" src={Arrow} height={90}/></button>
+		</data>
 		</div>
 
 		</div>

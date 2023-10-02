@@ -118,8 +118,8 @@ const ProfilePanel = (props) => {
         <div className={styles.container}>
             <div className={styles.firstrow}>
                 <input tabIndex="0" value={username} onChange={e => {setUsername(e.target.value)}} type="text" placeholder="Enter Username" required />
-                <button onClick={signInHandler} style={{ backgroundColor: signInOption && '#FA3701', color: signInOption && '#FCF6EA' }}>{signInOption ? 'Login' : 'Have an account?'}</button>
-                <button onClick={signUpHandler} style={{ backgroundColor: signUpOption && '#FA3701', color: signUpOption && '#FCF6EA' }}>{signUpOption ? 'Sign-Up' : 'Or need an account?'}</button>
+                <button onClick={signInHandler} style={{ backgroundColor: signInOption && '#FA3701', color: signInOption && '#FCF6EA' }}>Login</button>
+                <button onClick={signUpHandler} style={{ backgroundColor: signUpOption && '#FA3701', color: signUpOption && '#FCF6EA' }}>Sign-Up</button>
             </div>
             <div className={styles.secondrow}>
               <input tabIndex="0" value={password} onChange={e => {setPassword(e.target.value)}} type="password" placeholder="Enter Password" required />

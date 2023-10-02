@@ -16,4 +16,6 @@
   font-style: normal;
   font-size: x-large;
 
+  max-width: calc(100dvw - 1rem);
+
 }
